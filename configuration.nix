@@ -84,7 +84,7 @@
   # Create a new group for Nix configuration
   users.groups.nixconfig = {};
 
-#   # Add your user to the group
+#   # Add your user to the group  # Test edit 1.
 #   users.users.user = {
 #     # Your existing user config...
 #     extraGroups = [ "networkmanager" "wheel" "nixconfig" ];  # Add nixconfig here
