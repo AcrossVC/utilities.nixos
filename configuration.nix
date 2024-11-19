@@ -78,25 +78,14 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-# AI's attempt to let VScode edit config.nix
-# Your existing config...
-
   # Create a new group for Nix configuration
   users.groups.nixconfig = {};
-
-#   # Add your user to the group  # Test edit 1.
-#   users.users.user = {
-#     # Your existing user config...
-#     extraGroups = [ "networkmanager" "wheel" "nixconfig" ];  # Add nixconfig here
-#   };
 
   # Set proper permissions for /etc/nixos
   system.activationScripts.nixos-config-perms.text = ''
     chown -R root:nixconfig /etc/nixos
     chmod -R g+rw /etc/nixos
   '';
-
-
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.user = {
@@ -109,7 +98,6 @@
       vscode
       keepassxc
       firefox
-#       github-desktop
     ];
   };
 
@@ -130,10 +118,9 @@
   keepassxc
   thunderbird
   gparted
-#   vscode
   vscode-with-extensions
   tor
-  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+  neovim 
   wget
   libreoffice
 #   atlauncher
@@ -184,162 +171,12 @@ environment.interactiveShellInit = ''
   export VISUAL=${pkgs.vscode}/bin/code
 '';
 
-
-# This is only compatable with home-manager. I am not currently using that. 
-# programs.github-desktop = {
-#     enable = true;
-#     # Create a wrapped version of the GitHub Desktop package
-#     # This doesn't modify the original package, it creates a new one with specific environment settings
-#     package = pkgs.symlinkJoin {
-#       name = "github-desktop";
-#      paths = [ pkgs.github-desktop ];  # The original GitHub Desktop package
-#        buildInputs = [ pkgs.makeWrapper ];  # Tool used to create the wrapper
-#       
-#       # This creates a wrapper script around the original github-desktop binary
-#      # The wrapper script sets up the correct environment before running the actual program
-#       postBuild = ''
-#         wrapProgram $out/bin/github-desktop \
-#           # Add the OpenGL libraries to the library search path
-#          # This is safer than modifying system-wide library paths
-#           --prefix LD_LIBRARY_PATH : ${pkgs.lib.makeLibraryPath [
-#             pkgs.libGL
-#             pkgs.libglvnd
-#           ]} \
-#           # Set the editor environment variables to point directly to VS Code
-#           # This ensures GitHub Desktop can find VS Code regardless of system PATH
-#           --set EDITOR ${pkgs.vscode}/bin/code \
-#           --set VISUAL ${pkgs.vscode}/bin/code
-#       '';
-#     };
-#  };
-
-
-
-
-
-
-# Nix Features
-#   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # Graphics and Gaming
-#   hardware = {
-#     opengl = {
-#       enable = true;
-#       driSupport = true;
-#       driSupport32Bit = true;
-#       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
-#     };
-#     nvidia.open = false;
-#     steam-hardware.enable = true;
-#   };
-
 # Nix Features
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-#   # Graphics and Gaming
-#   services.xserver.videoDrivers = [ "nvidia" ];
-
-#   hardware = {
-#     opengl = {
-#       enable = true;
-#       driSupport = true;
-#      driSupport32Bit = true;
-#       extraPackages32 = with pkgs.pkgsi686Linux; [ libva ];
-#     };
-#     nvidia.open = false;
-#     steam-hardware.enable = true;
-#   };
-
-# Attempt #1 to connect github-desktop and firfox to shake hands for authentication.
-# https://github.com/NixOS/nixpkgs/issues/344911
-#  xdg = {
-#    autostart.enable = true;
-#     portal = {
-#       enable = true;
-#       extraPortals = [
-#         pkgs.xdg-desktop-portal
-#        pkgs.xdg-desktop-portal-gtk
-#         pkgs.xdg-desktop-portal-kde
-#       ];
-#     };
-#   };
-
-#  environment.systemPackages = with pkgs; [
-#     ...
-#     xdg-utils
-#     xdg-desktop-portal
-#     xdg-desktop-portal-gtk
-#     xdg-desktop-portal-kde
-#     ...
-#   ];
-
-#   environment.sessionVariables = {
-#     XDG_SESSION_TYPE = "wayland";
-#     XDG_CURRENT_DESKTOP = "gnome";
-#     XDG_SESSION_DESKTOP = "gnome";
-#     GTK_USE_PORTAL = "1";
-#     NIXOS_XDG_OPEN_USE_PORTAL = "1";
-#    };
-
-
-# Claude AI's first attempt to get github-desktop to authenticate... it promises me it won't break...
-#   # Enable GitHub Desktop
-#   environment.systemPackages = with pkgs; [
-#     github-desktop
-#   ];
-
 
   # Add XDG MIME type and protocol handler
   xdg.mime.enable = true;
   xdg.icons.enable = true;
-
-#   # Desktop portal configuration
-#   xdg.portal = {
-#     enable = true;
-#     config = {
-#       common = {
-#         default = ["gtk" "gnome"];
-#       };
-#     };
-#     extraPortals = with pkgs; [
-#       xdg-desktop-portal-gtk  # Claude says this is the only strictly neccessary portal? 
-# #       xdg-desktop-portal-gnome
-#     ];
-#   };
-
-
-# Possibly breaking github-desktop & vscode compatability. Code below will replace.
-# XDG Portal configuration
-#   xdg.portal = {
-#     enable = true;
-#     xdgOpenUsePortal = true;  # Ensure xdg-open uses the portal
-# #     wlr.enable = false;  # Disable Wayland-specific portal
-#     extraPortals = with pkgs; [ 
-#       xdg-desktop-portal-gtk 
-#       xdg-desktop-portal-gnome  # Explicitly include gnome portal
-#     ];
-#     config = {
-#       common = {
-#         default = ["gnome" "gtk"];
-#         "org.freedesktop.impl.portal.Secret" = ["gnome"];
-#       };
-#     };
-#   };
-
-# Claude AI suggests this may be causing conflict.
-#   # Remove any existing portal service files before creating new ones
-#   system.activationScripts.cleanupPortals = {
-#     text = ''
-#       echo "Cleaning up old portal services..."
-#       rm -f /run/current-system/sw/share/systemd/user/xdg-desktop-portal-gtk.service || true
-#     '';
-#     deps = [];
-#   };
-
-
-
-
-
 
 # Enable OpenGL
   hardware.opengl = {
@@ -394,43 +231,11 @@ hardware.nvidia.prime = {
 boot.initrd.kernelModules = [ "nvidia" ];
 boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
-
-
-
-
-
-
-
   # Add protocol handler for GitHub Desktop
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";  # Claude suggests will help with apps that use Electron e.g. github-desktop
 #     XDG_DESKTOP_PORTAL_DIR = "${pkgs.xdg-desktop-portal}/share/xdg-desktop-portal/portals";
   };
-
-# Claude also suggests this may be causing conflict as well.
-#   # Add desktop entry for URL handler
-#   environment.etc."xdg/applications/github-desktop-auth-handler.desktop".text = ''
-#     [Desktop Entry]
-#     Name=GitHub Desktop Auth Handler
-#     Exec=github-desktop %u
-#     Type=Application
-#     NoDisplay=true
-#     MimeType=x-scheme-handler/x-github-client;x-scheme-handler/x-github-desktop-auth;
-#     Terminal=false
-#   '';
-# 
-#   # Update MIME database
-#   system.activationScripts = {
-#     update-mime = {
-#       deps = [];
-#       text = ''
-#         ${pkgs.desktop-file-utils}/bin/update-desktop-database /etc/xdg/applications || true
-#       '';
-#     };
-#   };
-
-
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
