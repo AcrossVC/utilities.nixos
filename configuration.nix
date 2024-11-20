@@ -49,8 +49,11 @@
   services.xserver.enable = true;
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  # services.xserver.displayManager.gdm.enable = true;
+  # services.xserver.desktopManager.gnome.enable = true;
+ 
+  # "alternitive display manager" trying to enable wayland.
+  services.xserver.displayManager.sddm.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -146,7 +149,8 @@
   xdg-utils
   xdg-desktop-portal
   xdg-desktop-portal-gtk
-  xdg-desktop-portal-gnome  
+  xdg-desktop-portal-gnome 
+  xdg-desktop-portal-hyprland  # added this nonsense for hyprland before enabling it. may do nothing.
 
  # These provide the OpenGL libraries that Electron apps need
     # They're already part of your system due to your hardware.opengl settings,
