@@ -17,38 +17,7 @@ in {
     environment.systemPackages = with pkgs; [
       # GNOME utilities
       gnome.gnome-tweaks
-      gnome.dconf-editor
-      gnome-extension-manager
-      
-      # GNOME Shell Extensions
-      gnomeExtensions.user-themes
-      gnomeExtensions.dash-to-dock
-      gnomeExtensions.appindicator
     ];
 
-    # Theme configuration through home-manager
-    home-manager.users.user = {
-      # GNOME settings via dconf
-      dconf.settings = {
-        # Theme settings
-        "org/gnome/shell/extensions/user-theme" = {
-          name = "Catppuccin-${theme.flavor}-Standard-${theme.accent}-Dark";
-        };
-        
-        # Interface settings
-        "org/gnome/desktop/interface" = {
-          color-scheme = "prefer-dark";
-          gtk-theme = "Catppuccin-${theme.flavor}-Standard-${theme.accent}-Dark";
-          cursor-theme = "Catppuccin-${theme.flavor}-Cursors";
-          icon-theme = "Papirus-Dark";
-        };
-
-        # Window manager settings
-        "org/gnome/desktop/wm/preferences" = {
-          button-layout = "appmenu:minimize,maximize,close";
-          theme = "Catppuccin-${theme.flavor}-Standard-${theme.accent}-Dark";
-        };
-      };
-    };
   };
 }
