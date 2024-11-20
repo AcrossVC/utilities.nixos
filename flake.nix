@@ -49,11 +49,11 @@
                 desktop = {
                   enable = true;
                   active = "gnome";
-                  theme = {
-                    name = "catppuccin";
-                    flavor = "Mocha";
-                    accent = "Blue";
-                  };
+                  #   theme = {
+                  #   name = "catppuccin";
+                  #   flavor = "Mocha";
+                  #   accent = "Blue";
+                  # };
                 };
               };
             }
