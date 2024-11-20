@@ -1,13 +1,11 @@
 # /etc/nixos/modules/home/vscode.nix
 { config, lib, pkgs, ... }:
 
-{
-  # Good practice to make the module configurable
-  options.modules.vscode = {
-    enable = lib.mkEnableOption "VSCode configuration";
-  };
+  let
+    cfg = congif.programs.vscode;
+  in {
 
-  config = lib.mkIf config.modules.vscode.enable {
+
     programs.vscode = {
       enable = true;
       package = pkgs.unstable.vscode;
@@ -101,5 +99,4 @@
         };
       };
     };
-  };
-}
+  }
