@@ -38,10 +38,7 @@
     LC_MONETARY = "en_US.UTF-8";
     LC_NAME = "en_US.UTF-8";
     LC_NUMERIC = "en_US.UTF-8";
-    LC_PAPER = "en_US.UTF-8";
-    LC_TELEPHONE = "en_US.UTF-8";
-    LC_TIME = "en_US.UTF-8";
-  };
+    LC_PAPER = "en_US.UTF-8";20
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -57,7 +54,7 @@
   };
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing.enable = true;20
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
