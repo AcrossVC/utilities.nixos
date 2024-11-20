@@ -55,6 +55,8 @@
   # "alternitive display manager" trying to enable wayland.
   services.xserver.displayManager.sddm.enable = true;
 
+  programs.hyprland.enable = true; # enable Hyprland
+
   # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
@@ -120,6 +122,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+  kitty # required for default hyprland
   pciutils
   git
   python3
