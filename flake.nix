@@ -30,10 +30,7 @@
         specialArgs = { inherit inputs; };
         modules = [
           # Add overlay to system
-          { 
-            nixpkgs.overlays = [ overlay-unstable ];
-            nixpkgs.config.allowUnfree = true;
-          }
+          { nixpkgs.overlays = [ overlay-unstable ]; }
           
           # Your existing configuration
           ./configuration.nix
