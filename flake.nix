@@ -34,8 +34,8 @@
           ./configuration.nix   
 
           # Hyprland module enable 
-          # ./modules/system/hyprland.nix
-          ./home/hyprland.nix #updated pathing?
+          ./modules/system/hyprland.nix
+          # ./home/hyprland.nix #updated pathing?
           # {
           #   modules.hyprland.enable = true;
           # }
