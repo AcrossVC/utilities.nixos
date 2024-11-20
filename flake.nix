@@ -36,10 +36,11 @@
           # Hyprland module enable 
           # ./modules/system/hyprland.nix
           # ./home/hyprland.nix #updated pathing?
-          
+        {  
           modules.hyprland = {
             enable = true;
-          }
+          };
+        }
      
           #nvidia module enable
           ./modules/system/nvidia.nix
