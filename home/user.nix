@@ -2,7 +2,7 @@
 { pkgs, ... }: {
 
   imports = [
-    ./hyprland.nix
+    ../modules/system/hyprland.nix
   ];
 
   home = {
