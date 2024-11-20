@@ -24,15 +24,6 @@
       overlay-unstable = final: prev: {
         unstable = nixpkgs-unstable.legacyPackages.${system};
       };
-      pkgs = import nixpkgs {
-        inherit system;
-        config = {
-          allowUnfree = true;
-          permittedInsecurePackages = [
-            "electron-25.9.0"  # Add this if needed for VSCode
-          ];
-        };
-      };
     in {
       nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
         inherit system;
@@ -54,8 +45,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               extraSpecialArgs = { inherit inputs; };
-              users.user = { ... }: {
-                nixpkgs.config.allowUnfree = true;
+               users.user = { ... }: {
                 imports = [ ./home/user.nix ];
               };
             };
