@@ -16,6 +16,12 @@ with lib;
       xwayland.enable = true;
     };
 
+    # Add GDM session entry
+    services.xserver.displayManager.gdm = {
+      enable = true;  # Ensure GDM is enabled
+      wayland = true; # Ensure Wayland is enabled
+    };
+
     # Required environment variables for NVIDIA + Wayland
     environment.sessionVariables = {
       # NVIDIA specific
@@ -38,6 +44,9 @@ with lib;
       swww            # Wallpaper
       grim            # Screenshot utility
       slurp           # Screen area selection
+      libcanberra-gtk3  # For system sounds
+      gnome.adwaita-icon-theme  # Default icons
+      hicolor-icon-theme        # Fallback icons
     ];
 
     # Enable required services
