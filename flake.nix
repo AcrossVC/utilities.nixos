@@ -29,8 +29,15 @@
         specialArgs = { inherit inputs; };
         modules = [
           { nixpkgs.overlays = [ overlay-unstable ]; }
-          ./configuration.nix
-          # Add NVIDIA module
+          ./configuration.nix   
+
+          # Hyprland module enable 
+          ./modules/system/hyprland.nix
+          {
+            modules.hyprland.enable = true;
+          }
+     
+          #nvidia module enable
           ./modules/system/nvidia.nix
           {
             # Enable and configure NVIDIA
@@ -41,6 +48,8 @@
               intelBusId = "PCI:0:2:0";
             };
           }
+
+          # Home-manager module enable and import
           home-manager.nixosModules.home-manager
           {
             home-manager = {
