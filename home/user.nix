@@ -18,6 +18,18 @@
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
-  # Enable the VSCode module
-  modules.vscode.enable = true;
+  # Add VSCode configuration
+  programs.vscode = {
+    enable = true;
+    # We'll keep using the system VSCode for now
+    # This ensures we don't break your existing setup
+    package = pkgs.vscode;
+    
+    # Enable VSCode's built-in features
+    enableUpdateCheck = false;
+    enableExtensionUpdateCheck = false;
+
+    # We'll add extensions and settings in the next iteration
+    # after confirming this basic setup works
+  };
 }
