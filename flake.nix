@@ -54,13 +54,16 @@
             };
           }
 
+
+          
+
           # Home-manager module enable and import
           home-manager.nixosModules.home-manager
           {
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              backupFileExtension = "backup";
+              backupFileExtension = ".backup";
               extraSpecialArgs = { inherit inputs; };
               users.user = import ./home/user.nix;
             };

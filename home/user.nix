@@ -5,6 +5,8 @@
 #     ../modules/system/hyprland.nix
 #   ];
 
+  
+
   home = {
     username = "user";
     homeDirectory = "/home/user";
@@ -25,6 +27,8 @@
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
+  
+
   wayland.windowManager.hyprland = {
     # Whether to enable Hyprland wayland compositor
     enable = true;
@@ -35,6 +39,6 @@
 
     # Optional
     # Whether to enable hyprland-session.target on hyprland startup
-    systemd.enable = true;
+    # systemd.enable = true;
   };
 }
