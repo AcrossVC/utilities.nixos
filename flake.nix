@@ -52,7 +52,7 @@
                   theme = {
                     name = "catppuccin";
                     flavor = "mocha";
-                    accent = "Blue";
+                    accent = "blue";
                   };
                 };
               };
