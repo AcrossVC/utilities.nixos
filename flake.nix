@@ -14,6 +14,12 @@
       url = "github:nix-community/home-manager/release-24.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Theme-related inputs
+    catppuccin-kvantum = {
+      url = "github:catppuccin/kvantum";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, nixos-hardware, home-manager, ... }@inputs:
@@ -24,33 +30,81 @@
         unstable = nixpkgs-unstable.legacyPackages.${system};
       };
     in {
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs; };
-        modules = [
-          { nixpkgs.overlays = [ overlay-unstable ]; }
-          ./configuration.nix
-          # Add NVIDIA module
-          ./modules/system/nvidia.nix
-          {
-            # Enable and configure NVIDIA
-            modules.nvidia = {
-              enable = true;
-              # Verify these bus IDs match your system
-              busId = "PCI:1:0:0";
-              intelBusId = "PCI:0:2:0";
-            };
-          }
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = { inherit inputs; };
-              users.user = import ./home/user.nix;
-            };
-          }
-        ];
+      # Define multiple system configurations
+      nixosConfigurations = {
+        # Main system with GNOME
+        nixos = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [
+            { nixpkgs.overlays = [ overlay-unstable ]; }
+            ./configuration.nix
+            ./modules/system/nvidia.nix
+            ./modules/system/desktop-environments.nix
+            ./modules/system/desktop-gnome.nix
+            ./modules/system/desktop-i3.nix
+            {
+              modules = {
+                nvidia.enable = true;
+                desktop = {
+                  enable = true;
+                  active = "gnome";
+                  theme = {
+                    name = "catppuccin";
+                    flavor = "mocha";
+                    accent = "blue";
+                  };
+                };
+              };
+            }
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = { inherit inputs; };
+                users.user = import ./home/user.nix;
+              };
+            }
+          ];
+        };
+
+        # Alternative i3 configuration
+        i3 = nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [
+            { nixpkgs.overlays = [ overlay-unstable ]; }
+            ./configuration.nix
+            ./modules/system/nvidia.nix
+            ./modules/system/desktop-environments.nix
+            ./modules/system/desktop-gnome.nix
+            ./modules/system/desktop-i3.nix
+            {
+              modules = {
+                nvidia.enable = true;
+                desktop = {
+                  enable = true;
+                  active = "i3";
+                  theme = {
+                    name = "catppuccin";
+                    flavor = "macchiato";
+                    accent = "mauve";
+                  };
+                };
+              };
+            }
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = { inherit inputs; };
+                users.user = import ./home/user.nix;
+              };
+            }
+          ];
+        };
       };
     };
 }
