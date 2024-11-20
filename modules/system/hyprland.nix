@@ -16,7 +16,7 @@ with lib;
       xwayland.enable = true;
     };
 
-    he # Add GDM session entry
+    # Add GDM session entry
     services.xserver.displayManager.gdm = {
       enable = true;  # Ensure GDM is enabled
       wayland = true; # Ensure Wayland is enabled
