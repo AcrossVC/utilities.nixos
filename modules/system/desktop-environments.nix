@@ -30,7 +30,7 @@ with lib;
 
       # Theme variant/flavor
       flavor = mkOption {
-        type = types.enum [ "Mocha" "Macchiato" "Frappe" "Latte" ];
+        type = types.enum [ "Mocha" "macchiato" "frappe" "latte" ];
         default = "Mocha";
         description = "Specific variant of the selected theme";
       };

@@ -88,8 +88,8 @@
                   active = "i3";
                   theme = {
                     name = "catppuccin";
-                    flavor = "Mocha";
-                    accent = "Mauve";
+                    flavor = "macchiato";
+                    accent = "mauve";
                   };
                 };
               };
