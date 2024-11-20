@@ -15,7 +15,7 @@ with lib;
     # Selection of active desktop environment
     active = mkOption {
       type = types.enum [ "gnome" "i3" ];
-      default = "i3";
+      default = "gnome";
       description = "Which desktop environment to activate";
     };
 
