@@ -167,21 +167,23 @@
         "$altMod, mouse:273, resizewindow"
       ];
       
-      # Resize submap configuration
-      submap = {
-        resize = {
+      # Resize submap configuration # Cause invalid request error
+#     submap = {
+#        resize = {
           # Reset submap
-          bind = [
-            "escape, submap, reset"
-            "Return, submap, reset"
-          ];
-          # Resize bindings
-          binde = [
-            "right, resizeactive, 10 0"
-            "left, resizeactive, -10 0"
-            "up, resizeactive, 0 -10"
-            "down, resizeactive, 0 10"
-      ];
+#          bind = [
+#            "escape, submap, reset"
+#            "Return, submap, reset"
+#          ];
+#          # Resize bindings
+#          binde = [
+#            "right, resizeactive, 10 0"
+#            "left, resizeactive, -10 0"
+#            "up, resizeactive, 0 -10"
+#            "down, resizeactive, 0 10"
+#          ];
+#       };
+#    };
     };
 
     # Your existing manual config as fallback
@@ -224,7 +226,7 @@
     };
   };
 
-# Configure default applications
+  # Configure default applications
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
@@ -235,6 +237,4 @@
 
   # Ensure proper DBus/systemd integration
   systemd.user.targets.hyprland-session.Unit.Wants = [ "xdg-desktop-autostart.target" ];
-};
-};
 }
