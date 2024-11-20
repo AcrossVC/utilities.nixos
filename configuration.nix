@@ -109,6 +109,13 @@
     ];
   };
 
+  # Stolen from an error message despite explicitly enabling them.
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem #(lib.getName pkg) 
+  [
+    "vscode"
+  ];
+
+
   # Install firefox.
   programs.firefox.enable = true;
 
