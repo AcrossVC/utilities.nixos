@@ -25,7 +25,7 @@
         # mhutchie.git-graph  # Git history visualization
         
         # General Development
-        ms-vscode.remote-ssh    # Remote development
+        # ms-vscode.remote-ssh    # Remote development
         # ms-vscode-remote.remote-ssh-edit  # Remote SSH configuration editor
         
         # Terminal enhancements
