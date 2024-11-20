@@ -13,17 +13,18 @@ in {
     # Enable GNOME Desktop Environment
     services.xserver.desktopManager.gnome.enable = true;
 
-    # Combined package list
+    # GNOME-specific packages
     environment.systemPackages = with pkgs; [
-      # GNOME utilities
       gnome.gnome-tweaks
       gnome.dconf-editor
       gnome-extension-manager
-      
-      # GNOME Shell Extensions
-      gnomeExtensions.user-themes
-      gnomeExtensions.dash-to-dock
-      gnomeExtensions.appindicator
+    ];
+
+    # GNOME Shell Extensions
+    environment.systemPackages = with pkgs.gnomeExtensions; [
+      user-themes
+      dash-to-dock
+      appindicator
     ];
 
     # Theme configuration through home-manager

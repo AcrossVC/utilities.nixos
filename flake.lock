@@ -1,21 +1,5 @@
 {
   "nodes": {
-    "catppuccin-kvantum": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1729814718,
-        "narHash": "sha256-eQmEeKC+L408ajlNg3oKMnDK6Syy2GV6FrR2TN5ZBCg=",
-        "owner": "catppuccin",
-        "repo": "kvantum",
-        "rev": "a87694e0a3c97644dbb34f8835112d17b54ace68",
-        "type": "github"
-      },
-      "original": {
-        "owner": "catppuccin",
-        "repo": "kvantum",
-        "type": "github"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -87,7 +71,6 @@
     },
     "root": {
       "inputs": {
-        "catppuccin-kvantum": "catppuccin-kvantum",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
