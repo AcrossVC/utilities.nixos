@@ -17,6 +17,8 @@
       thunderbird
       keepassxc
       firefox
+      papirus-icon-theme
+      font-awesome
     ];
   };
 
