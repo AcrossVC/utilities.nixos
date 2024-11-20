@@ -37,8 +37,8 @@ with lib;
 
       # Accent color - useful for some themes
       accent = mkOption {
-        type = types.enum [ "blue" "red" "green" "yellow" "pink" "mauve" ];
-        default = "blue";
+        type = types.enum [ "Blue" "Red" "Green" "Yellow" "Pink" "Mauve" ];
+        default = "Blue";
         description = "Accent color for theme customization";
       };
     };
