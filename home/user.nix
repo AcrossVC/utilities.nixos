@@ -18,4 +18,6 @@
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
+  # Enable the VSCode module
+  modules.vscode.enable = true;
 }
