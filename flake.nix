@@ -33,40 +33,36 @@
           { nixpkgs.overlays = [ overlay-unstable ]; }
           ./configuration.nix   
 
-          # Hyprland module enable 
-          # ./modules/system/hyprland.nix
-          # ./home/hyprland.nix #updated pathing?
-        #{  
-        #  modules.hyprland = {
-        #    enable = true;
-        #  };
-        #}
-     
-          #nvidia module enable
-          ./modules/system/nvidia.nix
+          # Enable Hyprland properly with NVIDIA support
+          hyprland.nixosModules.default
           {
-            # Enable and configure NVIDIA
-            modules.nvidia = {
-              enable = true;
-              # Verify these bus IDs match your system
-              busId = "PCI:1:0:0";
-              intelBusId = "PCI:0:2:0";
-            };
+          programs.hyprland = {
+            enable = true;
+            xwayland.enable = true;
+            nvidiaPatches = true;  # Important for NVIDIA GPU
+          };
           }
 
+          # Your existing NVIDIA config
+          ./modules/system/nvidia.nix
+          {
+          modules.nvidia = {
+            enable = true;
+            busId = "PCI:1:0:0";
+            intelBusId = "PCI:0:2:0";
+          };
+          }
 
-          
-
-          # Home-manager module enable and import
+          # Home-manager module
           home-manager.nixosModules.home-manager
           {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = ".backup";
-              extraSpecialArgs = { inherit inputs; };
-              users.user = import ./home/user.nix;
-            };
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            backupFileExtension = ".backup";
+            extraSpecialArgs = { inherit inputs; };
+            users.user = import ./home/user.nix;
+          };
           }
         ];
       };
