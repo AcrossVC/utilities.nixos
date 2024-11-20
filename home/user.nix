@@ -41,6 +41,11 @@
       slurp          # Screen area selection
       swww           # Wallpaper utility
       wev            # Debug key events (useful for fixing SUPER key)
+
+       # Add these to your existing packages
+      gnome.gnome-keyring
+      gnome.seahorse
+      libsecret
     ];
   };
 
@@ -210,6 +215,10 @@
       windowrule = float, ^(kitty)$
       windowrule = size 1200 800, ^(kitty)$
       windowrule = center, ^(kitty)$
+
+      # Start GNOME Keyring
+      exec-once = ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+      exec-once = ${pkgs.gnome.gnome-keyring}/libexec/gnome-keyring-daemon --daemonize --start --components=secrets
     '';
   };
 

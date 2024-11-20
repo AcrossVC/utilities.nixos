@@ -55,6 +55,16 @@
   # "alternitive display manager" trying to enable wayland.
   #services.xserver.displayManager.sddm.enable = true;
 
+ # Enable GNOME Keyring
+  security.pam.services.login.enableGnomeKeyring = true;
+  services.gnome.gnome-keyring.enable = true;
+
+# Enable Secret Service API
+  services.dbus.enable = true;
+  
+  programs.seahorse.enable = true;  # GUI tool for managing passwords/keys
+  
+
   programs.hyprland = {
     enable = true;
     # set the flake package
@@ -170,6 +180,11 @@
   wine
   winetricks
   tor-browser
+  # Add these to your existing systemPackages
+    gnome.gnome-keyring
+    gnome.libgnome-keyring
+    gnome.seahorse  # GUI for managing passwords
+    libsecret  # Secret service API
   desktop-file-utils
   xdg-utils
   xdg-desktop-portal
