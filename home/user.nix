@@ -23,6 +23,12 @@
       gnome.nautilus  # GNOME's file manager
       gnome.file-roller  # Archive manager
 
+      # Media control packages
+      brightnessctl
+      pamixer
+      playerctl
+      light
+
       # Hyprland-specific packages
       waybar
       dunst
@@ -108,6 +114,27 @@
       "$mainMod" = "SUPER";
       "$altMod" = "ALT";
       
+
+      bindel = [
+        # Volume
+        ", XF86AudioRaiseVolume, exec, pamixer -i 5"
+        ", XF86AudioLowerVolume, exec, pamixer -d 5"
+        ", XF86AudioMute, exec, pamixer -t"
+        
+        # Brightness
+        ", XF86MonBrightnessUp, exec, brightnessctl set 5%+"
+        ", XF86MonBrightnessDown, exec, brightnessctl set 5%-"
+      ];
+      
+      bindl = [
+        # Media control
+        ", XF86AudioPlay, exec, playerctl play-pause"
+        ", XF86AudioNext, exec, playerctl next"
+        ", XF86AudioPrev, exec, playerctl previous"
+      ];
+
+
+
       bind = [
         # Terminal bindings with fallbacks
         "$mainMod, Return, exec, kitty"  # Primary terminal
@@ -160,6 +187,15 @@
         "$mainMod SHIFT, 8, movetoworkspace, 8"
         "$mainMod SHIFT, 9, movetoworkspace, 9"
         "$mainMod SHIFT, 0, movetoworkspace, 10"
+
+        # Alternative volume controls
+        "$mainMod, equal, exec, pamixer -i 5"
+        "$mainMod, minus, exec, pamixer -d 5"
+        "$mainMod, m, exec, pamixer -t"
+        
+        # Alternative brightness controls
+        "$mainMod SHIFT, equal, exec, brightnessctl set 5%+"
+        "$mainMod SHIFT, minus, exec, brightnessctl set 5%-"
       ];
       
       # Mouse bindings

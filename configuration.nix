@@ -98,6 +98,7 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
+    jack.enable = true;
     # If you want to use JACK applications, uncomment this
     #jack.enable = true;
 
@@ -127,13 +128,23 @@
   users.users.user = {
     isNormalUser = true;
     description = "user";
-    extraGroups = [ "networkmanager" "wheel" "nixconfig"];
+    extraGroups = [ "networkmanager" "wheel" "nixconfig" "video" "audio" ];
     shell = pkgs.bash;
     packages = with pkgs; [
       thunderbird
       vscode
       keepassxc
       firefox
+    ];
+  };
+
+  # Allow brightness control
+  hardware.brillo.enable = true;
+  services.actkbd = {
+    enable = true;
+    bindings = [
+      { keys = [ ]; events = [ "key" ]; command = "/run/current-system/sw/bin/brightnessctl set 5%+"; }
+      { keys = [ ]; events = [ "key" ]; command = "/run/current-system/sw/bin/brightnessctl set 5%-"; }
     ];
   };
 
@@ -185,6 +196,12 @@
     gnome.libgnome-keyring
     gnome.seahorse  # GUI for managing passwords
     libsecret  # Secret service API
+   # Add these to your existing systemPackages
+    brightnessctl
+    pamixer
+    playerctl
+    light
+    actkbd
   desktop-file-utils
   xdg-utils
   xdg-desktop-portal
