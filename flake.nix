@@ -1,3 +1,4 @@
+# /etc/nixos/flake.nix
 {
   description = "NixOS configuration";
 
@@ -41,13 +42,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               extraSpecialArgs = { inherit inputs; };
-              # Point directly to the directory containing the user.nix and modules
-              users.user = { ... }: {
-                imports = [ 
-                  ./home/user.nix
-                  ./modules/home/vscode.nix
-                ];
-              };
+              users.user = import ./home/user.nix;
             };
           }
         ];

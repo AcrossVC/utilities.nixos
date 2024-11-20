@@ -1,5 +1,8 @@
 # /etc/nixos/home/user.nix
 { pkgs, ... }: {
+  imports = [ ../modules/home/vscode.nix ];
+  
+  
   home = {
     username = "user";
     homeDirectory = "/home/user";
