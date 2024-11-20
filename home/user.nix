@@ -1,7 +1,8 @@
 # /etc/nixos/home/user.nix
 { pkgs, ... }: {
   imports = [ 
-    ./vscode.nix
+    # Import the module from the relative path
+    ../modules/home/vscode.nix 
   ];
   
   
