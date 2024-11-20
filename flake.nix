@@ -22,7 +22,7 @@
           ./configuration.nix
           
           # Hardware support for Lenovo Legion
-          nixos-hardware.nixosModules.lenovo-legion-15
+          # nixos-hardware.nixosModules.lenovo-legion 
         ];
       };
     };

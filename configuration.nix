@@ -78,11 +78,16 @@
   # Create a new group for Nix configuration
   users.groups.nixconfig = {};
 
-  # Set proper permissions for /etc/nixos
-  system.activationScripts.nixos-config-perms.text = ''
-    chown -R root:nixconfig /etc/nixos
-    chmod -R g+rw /etc/nixos
-  '';
+   # Set proper permissions for /etc/nixos and all its contents
+  system.activationScripts.nixos-config-perms = {
+    text = ''
+      echo "Setting up permissions for /etc/nixos"
+      chown -R root:nixconfig /etc/nixos
+      find /etc/nixos -type d -exec chmod 775 {} \;
+      find /etc/nixos -type f -exec chmod 664 {} \;
+    '';
+    deps = [];
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.user = {
@@ -120,11 +125,11 @@
   neovim 
   wget
   libreoffice
-#   atlauncher
+  #   atlauncher
   (pkgs.atlauncher.override {
     jre = temurin-jre-bin-8;
   })
-#   prismlauncher
+  #   prismlauncher
   steam
   gamescope
   mangohud
@@ -143,7 +148,7 @@
     # but we're making them explicitly available to GitHub Desktop
     libGL     # The main OpenGL library
     libglvnd  # The OpenGL vendor-neutral dispatch library
-#   github-desktop
+  #   github-desktop
     (symlinkJoin {
       name = "github-desktop-wrapped";
       paths = [ github-desktop ];
@@ -156,26 +161,26 @@
           ]} \
          --set EDITOR "code" \
          --set VISUAL "code"
-#          --set EDITOR ${pkgs.vscode}/bin/code \  # Absolute path
-#          --set VISUAL ${pkgs.vscode}/bin/code
+  #          --set EDITOR ${pkgs.vscode}/bin/code \  # Absolute path
+  #          --set VISUAL ${pkgs.vscode}/bin/code
       '';
     })
   ];
 
-# Add this section for user-specific environment variables
-environment.interactiveShellInit = ''
-  export EDITOR=${pkgs.vscode}/bin/code
-  export VISUAL=${pkgs.vscode}/bin/code
-'';
+  # Add this section for user-specific environment variables
+  environment.interactiveShellInit = ''
+    export EDITOR=${pkgs.vscode}/bin/code
+    export VISUAL=${pkgs.vscode}/bin/code
+  '';
 
-# Nix Features
+  # Nix Features
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Add XDG MIME type and protocol handler
   xdg.mime.enable = true;
   xdg.icons.enable = true;
 
-# Enable OpenGL
+  # Enable OpenGL
   hardware.opengl = {
     enable = true;
   };
@@ -215,7 +220,7 @@ environment.interactiveShellInit = ''
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
-hardware.nvidia.prime = {
+  hardware.nvidia.prime = {
     sync.enable = true;
 
     # Make sure to use the correct Bus ID values for your system!
@@ -225,13 +230,13 @@ hardware.nvidia.prime = {
   };
 
 
-boot.initrd.kernelModules = [ "nvidia" ];
-boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
+  boot.initrd.kernelModules = [ "nvidia" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
   # Add protocol handler for GitHub Desktop
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";  # Claude suggests will help with apps that use Electron e.g. github-desktop
-#     XDG_DESKTOP_PORTAL_DIR = "${pkgs.xdg-desktop-portal}/share/xdg-desktop-portal/portals";
+  #     XDG_DESKTOP_PORTAL_DIR = "${pkgs.xdg-desktop-portal}/share/xdg-desktop-portal/portals";
   };
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -261,4 +266,5 @@ boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
 
+};
 }
