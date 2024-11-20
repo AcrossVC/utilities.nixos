@@ -51,7 +51,7 @@
                   active = "gnome";
                   theme = {
                     name = "catppuccin";
-                    flavor = "Mocha";
+                    flavor = "mocha";
                     accent = "Blue";
                   };
                 };

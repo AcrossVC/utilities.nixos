@@ -11,7 +11,7 @@ let
 
   # Catppuccin color definitions based on selected flavor
   colors = {
-    Mocha = {
+    mocha = {
       rosewater = "#f5e0dc";
       flamingo  = "#f2cdcd";
       pink      = "#f5c2e7";
@@ -24,7 +24,7 @@ let
       teal      = "#94e2d5";
       sky       = "#89dceb";
       sapphire  = "#74c7ec";
-      Blue      = "#89b4fa";
+      blue      = "#89b4fa";
       lavender  = "#b4befe";
       text      = "#cdd6f4";
       subtext1  = "#bac2de";
@@ -104,7 +104,7 @@ in {
             separator  $surface0
 
             # class            border     background  text
-            focused_workspace  $Blue      $Blue       $base
+            focused_workspace  $blue      $blue       $base
             active_workspace   $surface1  $surface1   $text
             inactive_workspace $base      $base       $text
             urgent_workspace   $red       $red        $base
@@ -112,7 +112,7 @@ in {
         }
 
         # Window colors
-        client.focused          $Blue     $Blue      $base      $Blue
+        client.focused          $blue     $blue      $base      $blue
         client.focused_inactive $surface1 $surface1  $text      $surface1
         client.unfocused       $base     $base      $text      $base
         client.urgent          $red      $red       $base      $red
