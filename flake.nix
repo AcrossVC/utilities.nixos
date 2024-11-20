@@ -28,13 +28,19 @@
         inherit system;
         specialArgs = { inherit inputs; };
         modules = [
-          # Add overlay to system
           { nixpkgs.overlays = [ overlay-unstable ]; }
-          
-          # Your existing configuration
           ./configuration.nix
-          
-          # Home-manager
+          # Add NVIDIA module
+          ./modules/system/nvidia.nix
+          {
+            # Enable and configure NVIDIA
+            modules.nvidia = {
+              enable = true;
+              # Verify these bus IDs match your system
+              busId = "PCI:1:0:0";
+              intelBusId = "PCI:0:2:0";
+            };
+          }
           home-manager.nixosModules.home-manager
           {
             home-manager = {
