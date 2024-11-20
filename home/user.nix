@@ -11,6 +11,18 @@
       keepassxc
       firefox
       
+      # Terminal emulators (multiple options for reliability)
+      kitty
+      wezterm
+      alacritty  # Added as another backup option
+      
+      # File managers and dependencies
+      xfce.thunar  # Lightweight but feature-rich
+      xfce.thunar-archive-plugin
+      xfce.thunar-volman
+      gnome.nautilus  # GNOME's file manager
+      gnome.file-roller  # Archive manager
+
       # Hyprland-specific packages
       waybar
       dunst
@@ -18,6 +30,10 @@
       papirus-icon-theme
       font-awesome
       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+
+       # File manager dependencies
+      gvfs  # Virtual filesystem support
+      xdg-user-dirs  # Creates default user directories
       
       # Additional utilities for Wayland
       wl-clipboard    # Clipboard functionality
@@ -31,7 +47,18 @@
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
-  # Hyprland configuration through home-manager
+  # Configure kitty terminal
+  programs.kitty = {
+    enable = true;
+    settings = {
+      font_family = "JetBrainsMono Nerd Font";
+      font_size = 11;
+      enable_audio_bell = false;
+      background_opacity = "0.95";
+    };
+  };
+
+# Hyprland configuration through home-managerbin
   wayland.windowManager.hyprland = {
     enable = true;
     package = pkgs.hyprland;
@@ -77,15 +104,83 @@
       "$altMod" = "ALT";
       
       bind = [
-        "$mainMod, Return, exec, wezterm"
-        "$altMod, Return, exec, wezterm"  # Backup binding
+        # Terminal bindings with fallbacks
+        "$mainMod, Return, exec, kitty"  # Primary terminal
+        "$mainMod SHIFT, Return, exec, wezterm"  # Secondary terminal
+        "$altMod, Return, exec, alacritty"  # Tertiary terminal
         "$mainMod, Q, killactive,"
         "$mainMod SHIFT, Q, exit,"
         "$mainMod, Space, exec, rofi -show drun"
         "$altMod, Space, exec, rofi -show drun"  # Backup binding
-        "$mainMod, E, exec, nautilus"
+        # File manager bindings with fallbacks
+        "$mainMod, E, exec, thunar"  # Primary file manager
+        "$mainMod SHIFT, E, exec, nautilus"  # Secondary file manager
         "$mainMod, V, togglefloating,"
-        # Add more of your existing bindings here
+
+        # Window focus movement with arrow keys
+        "$mainMod, left, movefocus, l"
+        "$mainMod, right, movefocus, r"
+        "$mainMod, up, movefocus, u"
+        "$mainMod, down, movefocus, d"
+        
+        # Window movement with arrow keys
+        "$mainMod SHIFT, left, movewindow, l"
+        "$mainMod SHIFT, right, movewindow, r"
+        "$mainMod SHIFT, up, movewindow, u"
+        "$mainMod SHIFT, down, movewindow, d"
+        
+        # Resize submap activation
+        "$mainMod, R, submap, resize"
+        
+        # Workspace switching
+        "$mainMod, 1, workspace, 1"
+        "$mainMod, 2, workspace, 2"
+        "$mainMod, 3, workspace, 3"
+        "$mainMod, 4, workspace, 4"
+        "$mainMod, 5, workspace, 5"
+        "$mainMod, 6, workspace, 6"
+        "$mainMod, 7, workspace, 7"
+        "$mainMod, 8, workspace, 8"
+        "$mainMod, 9, workspace, 9"
+        "$mainMod, 0, workspace, 10"
+        
+        # Move windows to workspaces
+        "$mainMod SHIFT, 1, movetoworkspace, 1"
+        "$mainMod SHIFT, 2, movetoworkspace, 2"
+        "$mainMod SHIFT, 3, movetoworkspace, 3"
+        "$mainMod SHIFT, 4, movetoworkspace, 4"
+        "$mainMod SHIFT, 5, movetoworkspace, 5"
+        "$mainMod SHIFT, 6, movetoworkspace, 6"
+        "$mainMod SHIFT, 7, movetoworkspace, 7"
+        "$mainMod SHIFT, 8, movetoworkspace, 8"
+        "$mainMod SHIFT, 9, movetoworkspace, 9"
+        "$mainMod SHIFT, 0, movetoworkspace, 10"
+      ];
+      
+      # Mouse bindings
+      bindm = [
+        # Move windows with mainMod + left mouse button
+        "$mainMod, mouse:272, movewindow"
+        # Resize windows with mainMod + right mouse button
+        "$mainMod, mouse:273, resizewindow"
+        # Alternative resize with Alt key
+        "$altMod, mouse:273, resizewindow"
+      ];
+      
+      # Resize submap configuration
+      submap = {
+        resize = {
+          # Reset submap
+          bind = [
+            "escape, submap, reset"
+            "Return, submap, reset"
+          ];
+          # Resize bindings
+          binde = [
+            "right, resizeactive, 10 0"
+            "left, resizeactive, -10 0"
+            "up, resizeactive, 0 -10"
+            "down, resizeactive, 0 10"
       ];
     };
 
@@ -94,15 +189,25 @@
       # Startup applications
       exec-once = waybar
       exec-once = dunst
+      exec-once = kitty
+      exec-once = code
+      exec-once = firefox
       
       # Environment variables
+      env = WLR_NO_HARDWARE_CURSORS,1
       env = XCURSOR_SIZE,24
       env = XCURSOR_THEME,Papirus
       env = GTK_THEME,Adwaita-dark
       
-      # Additional window rules
-      windowrule = float, ^(pavucontrol)$
-      windowrule = float, ^(nm-connection-editor)$
+      # File manager specific rules
+      windowrule = float, ^(thunar)$
+      windowrule = size 1200 800, ^(thunar)$
+      windowrule = center, ^(thunar)$
+      
+      # Terminal specific rules
+      windowrule = float, ^(kitty)$
+      windowrule = size 1200 800, ^(kitty)$
+      windowrule = center, ^(kitty)$
     '';
   };
 
@@ -116,6 +221,15 @@
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;
+    };
+  };
+
+# Configure default applications
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "inode/directory" = ["thunar.desktop" "nautilus.desktop"];
+      "text/plain" = ["kitty-open.desktop"];
     };
   };
 

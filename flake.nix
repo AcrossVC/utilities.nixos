@@ -39,7 +39,7 @@
           programs.hyprland = {
             enable = true;
             xwayland.enable = true;
-            nvidiaPatches = true;  # Important for NVIDIA GPU
+            # nvidiaPatches = true;  # Nvidia patches are no longer needed
           };
           }
 
