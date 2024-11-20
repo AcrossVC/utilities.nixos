@@ -135,7 +135,15 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  kitty # required for default hyprland
+  #hyprland pkgs
+  kitty
+  wezterm  # terminal
+  rofi-wayland  # application launcher
+  waybar  # status bar
+  dunst  # notifications
+  jetbrains-mono  #font for waybar
+  (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+  # end of hyprland pkgs
   pciutils
   git
   python3

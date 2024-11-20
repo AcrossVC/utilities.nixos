@@ -1,5 +1,10 @@
 # /etc/nixos/home/user.nix
 { pkgs, ... }: {
+
+  imports = [
+    ./hyprland.nix
+  ];
+
   home = {
     username = "user";
     homeDirectory = "/home/user";
