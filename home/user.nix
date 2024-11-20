@@ -1,9 +1,9 @@
 # /etc/nixos/home/user.nix
 { pkgs, ... }: {
 
-  imports = [
-    ../modules/system/hyprland.nix
-  ];
+#   imports = [
+#     ../modules/system/hyprland.nix
+#   ];
 
   home = {
     username = "user";
@@ -25,6 +25,16 @@
   # Let home-manager manage itself
   programs.home-manager.enable = true;
 
-  # Initially, we'll keep vscode in system config
-  # We'll move it to unstable after confirming this works
+  wayland.windowManager.hyprland = {
+    # Whether to enable Hyprland wayland compositor
+    enable = true;
+    # The hyprland package to use
+    package = pkgs.hyprland;
+    # Whether to enable XWayland
+    xwayland.enable = true;
+
+    # Optional
+    # Whether to enable hyprland-session.target on hyprland startup
+    systemd.enable = true;
+  };
 }
