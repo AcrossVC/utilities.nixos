@@ -21,8 +21,7 @@
           # Your existing configuration
           ./configuration.nix
           
-          # Hardware support for Lenovo Legion
-          # nixos-hardware.nixosModules.lenovo-legion 
+          
         ];
       };
     };
