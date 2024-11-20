@@ -1,8 +1,9 @@
 # /etc/nixos/home/hyprland.nix
 
-{ config, pkgs, ... }: {
+{ config, pkgs, ... }: 
+{
   # Hyprland config file
-  user.file."hypr/hyprland.conf".text = ''
+  home.file."~/.config/hypr/hyprland.conf".text = ''
     # Monitor configuration
     monitor=,preferred,auto,1
 
@@ -113,7 +114,7 @@
   '';
 
   # Waybar configuration
-  user.file."waybar/config".text = ''
+  home.file."~/.config/waybar/config".text = ''
     {
       "layer": "top",
       "position": "top",
@@ -147,7 +148,7 @@
   '';
 
   # Waybar style
-  user.file."waybar/style.css".text = ''
+  home.file."~/.config/waybar/style.css".text = ''
     * {
       border: none;
       border-radius: 0;
