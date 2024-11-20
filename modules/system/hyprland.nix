@@ -2,7 +2,7 @@
 
 { config, pkgs, ... }: {
   # Hyprland config file
-  home.file."hypr/hyprland.conf".text = ''
+  file."hypr/hyprland.conf".text = ''
     # Monitor configuration
     monitor=,preferred,auto,1
 
@@ -113,7 +113,7 @@
   '';
 
   # Waybar configuration
-  home.file."waybar/config".text = ''
+  file."waybar/config".text = ''
     {
       "layer": "top",
       "position": "top",
@@ -147,7 +147,7 @@
   '';
 
   # Waybar style
-  home.file."waybar/style.css".text = ''
+  file."waybar/style.css".text = ''
     * {
       border: none;
       border-radius: 0;
