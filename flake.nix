@@ -42,9 +42,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               extraSpecialArgs = { inherit inputs; };
-               users.user = { ... }: {
-                imports = [ ./home/user.nix ];
-              };
+              users.user = import ./home/user.nix;
             };
           }
         ];

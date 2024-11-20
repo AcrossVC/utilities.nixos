@@ -1,7 +1,11 @@
 # /etc/nixos/modules/home/vscode.nix
 { config, lib, pkgs, ... }:
 
-{
+  let
+    cfg = congif.programs.vscode;
+  in {
+
+
     programs.vscode = {
       enable = true;
       package = pkgs.unstable.vscode;
