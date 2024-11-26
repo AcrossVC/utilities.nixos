@@ -220,7 +220,6 @@
     # Startup applications and environment
     extraConfig = ''
       # Essential startup applications
-      exec-once = waybar
       exec-once = dunst
       exec-once = nm-applet --indicator
       exec-once = blueman-applet
@@ -298,6 +297,8 @@
       layer = "top";
       position = "top";
       height = 30;
+      margin-right = 10;  # Add margins to prevent power button overlap
+      margin-left = 10;
       
       modules-left = [
         "hyprland/workspaces"
@@ -361,7 +362,7 @@
 
       "custom/power" = {
         format = "⏻";
-        on-click = "wlogout";
+        on-click = "wlogout -p layer-shell";  # Force proper layer-shell protocol
         tooltip = false;
       };
     }];
@@ -370,28 +371,96 @@
   # Add power menu configuration (wlogout)
   programs.wlogout = {
     enable = true;
+    layout = [
+      {
+        "label" = "lock";
+        "action" = "swaylock";
+        "text" = "Lock";
+        "keybind" = "l";
+      }
+      {
+        "label" = "hibernate";
+        "action" = "systemctl hibernate";
+        "text" = "Hibernate";
+        "keybind" = "h";
+      }
+      {
+        "label" = "suspend";
+        "action" = "systemctl suspend";
+        "text" = "Suspend";
+        "keybind" = "s";
+      }
+      {
+        "label" = "logout";
+        "action" = "loginctl terminate-user $USER";
+        "text" = "Logout";
+        "keybind" = "e";
+      }
+      {
+        "label" = "shutdown";
+        "action" = "systemctl poweroff";
+        "text" = "Shutdown";
+        "keybind" = "p";
+      }
+      {
+        "label" = "reboot";
+        "action" = "systemctl reboot";
+        "text" = "Reboot";
+        "keybind" = "r";
+      }
+    ];
     style = ''
       * {
+        background-image: none;
         font-family: "JetBrainsMono Nerd Font";
       }
       
       window {
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(12, 12, 12, 0.9);
       }
       
       button {
-        background-color: #1e1e1e;
+        color: #FFFFFF;
+        background-color: #1E1E1E;
         border-style: solid;
         border-width: 2px;
+        border-radius: 8px;
         background-repeat: no-repeat;
         background-position: center;
         background-size: 25%;
-        border-radius: 8px;
+        margin: 5px;
+        box-shadow: none;
+        text-shadow: none;
+        animation: none;
       }
       
       button:focus, button:active, button:hover {
         background-color: #3700B3;
         outline-style: none;
+      }
+
+      #lock {
+        background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/lock.png"));
+      }
+
+      #logout {
+        background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/logout.png"));
+      }
+
+      #suspend {
+        background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/suspend.png"));
+      }
+
+      #hibernate {
+        background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/hibernate.png"));
+      }
+
+      #shutdown {
+        background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/shutdown.png"));
+      }
+
+      #reboot {
+        background-image: image(url("${pkgs.wlogout}/share/wlogout/icons/reboot.png"));
       }
     '';
   };

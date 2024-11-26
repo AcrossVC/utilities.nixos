@@ -45,6 +45,57 @@
   };
 
 
+
+  # Bluetooth support
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;  # Optional: automatically power on bluetooth at boot
+  };
+  services.blueman.enable = true;
+
+  # Power Management
+  services.thermald.enable = true;  # Thermal management for Intel CPUs
+  powerManagement = {
+    enable = true;
+    powertop.enable = true;  # Power consumption and management tool
+  };
+
+  # Systemd sleep/hibernate configuration
+  systemd.sleep.extraConfig = ''
+    [Sleep]
+    # Hibernate instead of sleep when battery is low
+    HibernateMode=shutdown
+    HibernateState=disk
+    # Use a larger hibernate delay when plugged in
+    HibernateDelaySec=3600
+    # Hybrid-sleep by default
+    SuspendMode=suspend
+    SuspendState=disk
+  '';
+
+  services.logind = {
+    lidSwitch = "suspend-then-hibernate";  # When laptop lid is closed
+    extraConfig = ''
+      HandlePowerKey=suspend
+      IdleAction=suspend-then-hibernate
+      IdleActionSec=30min  # Time before auto-suspend when idle
+      
+      # Different timeouts based on power state
+      HandleLidSwitchExternalPower=suspend
+      HandleLidSwitchDocked=ignore
+    '';
+  };
+
+  # Fix cursor disappearing in resize areas
+  environment.sessionVariables = {
+    WLR_NO_HARDWARE_CURSORS = "1";  # Force software cursors
+    XCURSOR_SIZE = "24";
+  };
+
+
+
+
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
