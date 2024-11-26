@@ -13,7 +13,11 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.supportedFilesystems = [ "ntfs" ];
+  # 1. Explicitly enable NTFS support in the kernel and userspace
+  boot = {
+    supportedFilesystems = [ "ntfs" "ntfs3" ];
+    kernelModules = [ "ntfs3" ];  # Ensure the kernel module is loaded
+  };
 
   boot.initrd.luks.devices."luks-4be4e646-3f6f-4179-9139-2efad8c07b97".device = "/dev/disk/by-uuid/4be4e646-3f6f-4179-9139-2efad8c07b97";
   networking.hostName = "nixos"; # Define your hostname.
@@ -73,6 +77,13 @@
       ];
       config.common.default = "*";
     };
+  
+
+  # 3. Ensure proper services are enabled
+  services = {
+    udisks2.enable = true;        # For disk management
+    gvfs.enable = true;           # For mount management
+  };
 
 
   # Bluetooth support
@@ -249,12 +260,14 @@
 
   # Helpful disk utilities
   ntfs3g        # For NTFS filesystem support
+  ntfsprogs       # Additional NTFS utilities
   smartmontools # For drive health diagnostics
   parted       # For partition management
   gparted      # GUI partition manager
   hdparm       # For disk management
   testdisk     # Data recovery utility
   dosfstools   # For working with FAT/FAT32
+  usbutils       # For USB device information
 
   pciutils
   git
