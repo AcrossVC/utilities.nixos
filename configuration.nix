@@ -57,20 +57,20 @@
   # Thumbnail support
   services.tumbler.enable = true;  # Thumbnail generator
 
-  # Default applications handling
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-hyprland
+#   # Default applications handling
+#   xdg.portal = {
+#     enable = true;
+#     extraPortals = with pkgs; [
+#       xdg-desktop-portal-gtk
+#       xdg-desktop-portal-hyprland
       
       # Probably not necessary, but hoping it doesn't hurt.
-      xdg-utils
-      xdg-desktop-portal
-      xdg-desktop-portal-gnome 
-    ];
-    config.common.default = "*";
-  };
+      # xdg-utils
+      # xdg-desktop-portal
+      # xdg-desktop-portal-gnome
+#     ];
+#     config.common.default = "*";
+#   };
 
 
   # Bluetooth support
@@ -316,8 +316,8 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Add XDG MIME type and protocol handler
-  xdg.mime.enable = true;
-  xdg.icons.enable = true;
+  # xdg.mime.enable = true;
+  
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

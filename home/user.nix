@@ -67,8 +67,8 @@
       libnotify        # Notification sending
       
       # File Management Enhancement
-      xdg-utils        # For xdg-open, etc.
-      xdg-user-dirs    # Creates default user directories
+      # xdg-utils        # For xdg-open, etc.
+      # xdg-user-dirs    # Creates default user directories
       
       # Theming
       qt5ct            # Qt5 theme configuration
@@ -287,7 +287,7 @@
       exec-once = wl-paste --type image --watch cliphist store
       
       # Create default directories
-      exec-once = xdg-user-dirs-update
+      # exec-once = xdg-user-dirs-update
     '';
   };
 
@@ -305,6 +305,7 @@
   };
 
   # Default applications
+  xdg.icons.enable = true; #pulled from config.nix?
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
