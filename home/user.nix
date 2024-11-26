@@ -176,16 +176,16 @@
         "$mainMod CTRL, l, splitratio, +0.3"  # Resize right
 
         # Window Snapping - Directional
-        "$mainMod ALT, left, movewindow, l"  # Snap to left half
-        "$mainMod ALT, right, movewindow, r"  # Snap to right half
-        "$mainMod ALT, up, movewindow, u"  # Snap to top half
-        "$mainMod ALT, down, movewindow, d"  # Snap to bottom half
+        "$mainMod, u, movewindow, l"  # Snap to left half
+        "$mainMod, i, movewindow, r"  # Snap to right half
+        "$mainMod, o, movewindow, u"  # Snap to top half
+        "$mainMod, p, movewindow, d"  # Snap to bottom half
 
         # Corner Snapping
-        "$mainMod CTRL, 7, movewindow, ul"  # Upper left corner
-        "$mainMod CTRL, 9, movewindow, ur"  # Upper right corner
-        "$mainMod CTRL, 1, movewindow, dl"  # Lower left corner
-        "$mainMod CTRL, 3, movewindow, dr"  # Lower right corner
+        "$mainMod, z, movewindow, ul"  # Upper left corner
+        "$mainMod, x, movewindow, ur"  # Upper right corner
+        "$mainMod, c, movewindow, dl"  # Lower left corner
+        "$mainMod, v, movewindow, dr"  # Lower right corner
     
         # Workspaces
         "$mainMod, 1, workspace, 1"
