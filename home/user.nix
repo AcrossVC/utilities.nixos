@@ -11,12 +11,6 @@
       wezterm        # Secondary
       alacritty      # Tertiary (fallback)
       
-      # Core Wayland Utilities
-      wl-clipboard    # Wayland clipboard manager
-      grim           # Screenshot utility
-      slurp          # Screen area selection
-      swww           # Wallpaper utility
-      
       # System Interaction
       brightnessctl   # Brightness control
       pamixer         # Audio control
@@ -61,6 +55,38 @@
       # System Tray Tools
       blueman            # Bluetooth
       pavucontrol        # Audio control GUI
+
+      # Screenshot and Recording
+      grim              # Screenshot tool
+      slurp             # Screen area selection
+      wf-recorder       # Screen recording
+      
+      # Clipboard and Notifications
+      cliphist          # Clipboard manager
+      wl-clipboard      # Wayland clipboard utilities
+      libnotify        # Notification sending
+      
+      # File Management Enhancement
+      xdg-utils        # For xdg-open, etc.
+      xdg-user-dirs    # Creates default user directories
+      
+      # Theming
+      qt5ct            # Qt5 theme configuration
+      qt6ct            # Qt6 theme configuration
+      nwg-look         # GTK theme configuration
+      
+      # Wallpaper and Appearance
+      swww             # Wallpaper daemon
+      hyprpaper        # Alternative wallpaper utility
+      
+      # Additional Utilities
+      polkit-kde-agent # Authentication popups
+      
+      # Optional but Useful
+      gnome.gnome-disk-utility  # Disk management
+      gnome.file-roller        # Archive manager
+      imv                      # Image viewer
+      mpv                      # Video player
     ];
   };
 
@@ -195,6 +221,17 @@
         "$mainMod, N, exec, nm-connection-editor"  # Network settings
         "$mainMod, B, exec, blueman-manager"  # Bluetooth
         "$mainMod, P, exec, pavucontrol"  # Audio settings
+
+        # Screenshot bindings
+        "$mainMod, Print, exec, grim -g \"$(slurp)\" - | wl-copy"  # Area screenshot to clipboard
+        "$mainMod SHIFT, Print, exec, grim -g \"$(slurp)\" ~/Pictures/Screenshots/$(date +'%Y%m%d_%H%M%S').png"  # Area screenshot to file
+        ", Print, exec, grim - | wl-copy"  # Full screenshot to clipboard
+        
+        # Clipboard history
+        "$mainMod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+        
+        # Color picker
+        "$mainMod, C, exec, hyprpicker -a"
       ];
 
       # Media key bindings
@@ -237,6 +274,20 @@
 
       # GNOME Keyring integration
       exec-once = ${pkgs.gnome.gnome-keyring}/libexec/gnome-keyring-daemon --daemonize --start --components=secrets
+
+      # Wallpaper
+      exec-once = swww init
+      exec-once = swww img ${~/heart/wallpapers/wallpaper.jpg}  # Add your wallpaper path
+      
+      # Authentication agent
+      exec-once = ${pkgs.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1
+      
+      # Clipboard manager
+      exec-once = wl-paste --type text --watch cliphist store
+      exec-once = wl-paste --type image --watch cliphist store
+      
+      # Create default directories
+      exec-once = xdg-user-dirs-update
     '';
   };
 
@@ -260,6 +311,13 @@
       "inode/directory" = ["thunar.desktop" "nautilus.desktop"];
       "text/plain" = ["code.desktop"];
       "text/html" = ["firefox.desktop"];
+      "image/*" = ["imv.desktop"];
+      "video/*" = ["mpv.desktop"];
+      "application/pdf" = ["firefox.desktop"];
+      "x-scheme-handler/http" = ["firefox.desktop"];
+      "x-scheme-handler/https" = ["firefox.desktop"];
+      "x-scheme-handler/about" = ["firefox.desktop"];
+      "x-scheme-handler/unknown" = ["firefox.desktop"];
     };
   };
 
@@ -477,5 +535,47 @@
       indicator = true;
       clock = true;
     };
+  };
+
+  # Configure notifications
+  services.dunst = {
+    enable = true;
+    settings = {
+      global = {
+        width = 300;
+        height = 100;
+        offset = "30x50";
+        origin = "top-right";
+        transparency = 10;
+        frame_width = 1;
+        font = "JetBrainsMono Nerd Font 11";
+      };
+      urgency_low = {
+        background = "#1E1E1E";
+        foreground = "#FFFFFF";
+      };
+      urgency_normal = {
+        background = "#1E1E1E";
+        foreground = "#FFFFFF";
+      };
+      urgency_critical = {
+        background = "#900000";
+        foreground = "#FFFFFF";
+        frame_color = "#FF0000";
+      };
+    };
+  };
+
+  # Clipboard manager configuration
+  systemd.user.services.cliphist = {
+    Unit = {
+      Description = "Clipboard history service";
+      PartOf = ["graphical-session.target"];
+    };
+    Service = {
+      ExecStart = "${pkgs.wl-clipboard}/bin/wl-paste --watch ${pkgs.cliphist}/bin/cliphist store";
+      Restart = "always";
+    };
+    Install.WantedBy = ["graphical-session.target"];
   };
 }

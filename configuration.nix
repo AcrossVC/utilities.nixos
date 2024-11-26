@@ -46,6 +46,28 @@
 
 
 
+
+  # Authentication for GUI apps
+  security.polkit.enable = true;
+  
+  # Auto-mounting
+  services.gvfs.enable = true;  # For trash, MTP, etc.
+  services.udisks2.enable = true;  # For auto-mounting drives
+  
+  # Thumbnail support
+  services.tumbler.enable = true;  # Thumbnail generator
+
+  # Default applications handling
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-hyprland
+    ];
+    config.common.default = "*";
+  };
+
+
   # Bluetooth support
   hardware.bluetooth = {
     enable = true;
