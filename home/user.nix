@@ -277,7 +277,7 @@
 
       # Wallpaper
       exec-once = swww init
-      exec-once = swww img ${~/heart/wallpapers/wallpaper.jpg}  # Add your wallpaper path
+      exec-once = swww img ${config.home.homeDirectory}/heart/wallpapers/wallpaper.jpg  # Add your wallpaper path
       
       # Authentication agent
       exec-once = ${pkgs.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1
