@@ -13,6 +13,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.supportedFilesystems = [ "ntfs" ];
 
   boot.initrd.luks.devices."luks-4be4e646-3f6f-4179-9139-2efad8c07b97".device = "/dev/disk/by-uuid/4be4e646-3f6f-4179-9139-2efad8c07b97";
   networking.hostName = "nixos"; # Define your hostname.
@@ -245,6 +246,16 @@
   jetbrains-mono  #font for waybar
   (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   # end of hyprland pkgs
+
+  # Helpful disk utilities
+  ntfs3g        # For NTFS filesystem support
+  smartmontools # For drive health diagnostics
+  parted       # For partition management
+  gparted      # GUI partition manager
+  hdparm       # For disk management
+  testdisk     # Data recovery utility
+  dosfstools   # For working with FAT/FAT32
+
   pciutils
   git
   python3
