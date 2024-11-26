@@ -234,6 +234,16 @@
         "$mainMod, y, exec, hyprpicker -a"
       ];
 
+      # Mouse bindings
+      bindm = [
+        # Move windows with mainMod + left mouse button
+        "$mainMod, mouse:272, movewindow"
+        # Resize windows with mainMod + right mouse button
+        "$mainMod, mouse:273, resizewindow"
+        # Alternative resize with Alt key
+        "$altMod, mouse:273, resizewindow"
+      ];
+
       # Media key bindings
       bindel = [
         # Volume keys
