@@ -305,7 +305,7 @@
   };
 
   # Default applications
-  xdg.icons.enable = true; #pulled from config.nix?
+  
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {

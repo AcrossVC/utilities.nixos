@@ -57,20 +57,21 @@
   # Thumbnail support
   services.tumbler.enable = true;  # Thumbnail generator
 
-#   # Default applications handling
-#   xdg.portal = {
-#     enable = true;
-#     extraPortals = with pkgs; [
-#       xdg-desktop-portal-gtk
-#       xdg-desktop-portal-hyprland
-      
-      # Probably not necessary, but hoping it doesn't hurt.
-      # xdg-utils
-      # xdg-desktop-portal
-      # xdg-desktop-portal-gnome
-#     ];
-#     config.common.default = "*";
-#   };
+    xdg.icons.enable = true;
+    # Default applications handling
+    xdg.portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-gtk
+        #xdg-desktop-portal-hyprland
+        
+        # Probably not necessary, but hoping it doesn't hurt.
+        xdg-utils
+        xdg-desktop-portal
+        xdg-desktop-portal-gnome
+      ];
+      config.common.default = "*";
+    };
 
 
   # Bluetooth support
