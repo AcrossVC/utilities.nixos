@@ -63,6 +63,11 @@
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
       xdg-desktop-portal-hyprland
+      
+      # Probably not necessary, but hoping it doesn't hurt.
+      xdg-utils
+      xdg-desktop-portal
+      xdg-desktop-portal-gnome 
     ];
     config.common.default = "*";
   };
@@ -276,11 +281,6 @@
     light
     actkbd
   desktop-file-utils
-  xdg-utils
-  xdg-desktop-portal
-  xdg-desktop-portal-gtk
-  xdg-desktop-portal-gnome 
-  xdg-desktop-portal-hyprland  # added this nonsense for hyprland before enabling it. may do nothing.
 
  # These provide the OpenGL libraries that Electron apps need
     # They're already part of your system due to your hardware.opengl settings,
