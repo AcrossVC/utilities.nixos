@@ -169,11 +169,11 @@
 
         # Window States
         "$mainMod, F, fullscreen, 0"  # Full screen
-        "$mainMod, V, togglefloating"  # Toggle float
+        "$mainMod, b, togglefloating"  # Toggle float
     
         # Window Snapping (Using Numpad Layout on Main Keys)
-        "$mainMod CTRL, h, splitratio, -0.3"  # Resize left
-        "$mainMod CTRL, l, splitratio, +0.3"  # Resize right
+        "$mainMod SHIFT, d, splitratio, -0.3"  # Resize left
+        "$mainMod SHIFT, f, splitratio, +0.3"  # Resize right
 
         # Window Snapping - Directional
         "$mainMod, u, movewindow, l"  # Snap to left half
@@ -214,13 +214,13 @@
         "$mainMod, F12, exec, brightnessctl set 5%+"
 
         # System Controls
-        "$mainMod, X, exec, swaylock"  # Lock screen
+        "$mainMod, P, exec, swaylock"  # Lock screen
         "$mainMod SHIFT, P, exec, wlogout"  # Power menu
         
         # Quick Settings
-        "$mainMod, N, exec, nm-connection-editor"  # Network settings
-        "$mainMod, B, exec, blueman-manager"  # Bluetooth
-        "$mainMod, P, exec, pavucontrol"  # Audio settings
+        #"$mainMod, N, exec, nm-connection-editor"  # Network settings
+        #"$mainMod, B, exec, blueman-manager"  # Bluetooth
+        #"$mainMod, P, exec, pavucontrol"  # Audio settings
 
         # Screenshot bindings
         "$mainMod, Print, exec, grim -g \"$(slurp)\" - | wl-copy"  # Area screenshot to clipboard
@@ -228,10 +228,10 @@
         ", Print, exec, grim - | wl-copy"  # Full screenshot to clipboard
         
         # Clipboard history
-        "$mainMod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
+        "$mainMod, M, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy"
         
         # Color picker
-        "$mainMod, C, exec, hyprpicker -a"
+        "$mainMod, y, exec, hyprpicker -a"
       ];
 
       # Media key bindings
@@ -276,7 +276,7 @@
       exec-once = ${pkgs.gnome.gnome-keyring}/libexec/gnome-keyring-daemon --daemonize --start --components=secrets
 
       # Wallpaper
-      exec-once = swww init
+      exec-once = swww-daemon
       exec-once = swww img /home/user/heart/utilities/wallpapers/wallpaper.jpg  # Add your wallpaper path
       
       # Authentication agent
