@@ -50,6 +50,17 @@
       gnome.gnome-keyring
       gnome.seahorse     # GUI for keyring
       libsecret         # Secret storage
+
+      # Network
+      networkmanagerapplet  # nm-applet for WiFi
+    
+      # Power/Session Management
+      swaylock-effects     # Screen locking
+      wlogout             # Logout menu
+      
+      # System Tray Tools
+      blueman            # Bluetooth
+      pavucontrol        # Audio control GUI
     ];
   };
 
@@ -175,6 +186,15 @@
         "$mainMod, F3, exec, pamixer -i 5"
         "$mainMod, F11, exec, brightnessctl set 5%-"
         "$mainMod, F12, exec, brightnessctl set 5%+"
+
+        # System Controls
+        "$mainMod, X, exec, swaylock"  # Lock screen
+        "$mainMod SHIFT, P, exec, wlogout"  # Power menu
+        
+        # Quick Settings
+        "$mainMod, N, exec, nm-connection-editor"  # Network settings
+        "$mainMod, B, exec, blueman-manager"  # Bluetooth
+        "$mainMod, P, exec, pavucontrol"  # Audio settings
       ];
 
       # Media key bindings
@@ -202,6 +222,8 @@
       # Essential startup applications
       exec-once = waybar
       exec-once = dunst
+      exec-once = nm-applet --indicator
+      exec-once = blueman-applet
       
       # Environment variables
       env = WLR_NO_HARDWARE_CURSORS,1
@@ -239,6 +261,152 @@
       "inode/directory" = ["thunar.desktop" "nautilus.desktop"];
       "text/plain" = ["code.desktop"];
       "text/html" = ["firefox.desktop"];
+    };
+  };
+
+  # Waybar Configuration
+  programs.waybar = {
+    enable = true;
+    systemd.enable = true;
+    style = ''
+      * {
+        border: none;
+        font-family: "JetBrainsMono Nerd Font";
+        font-size: 13px;
+      }
+
+      window#waybar {
+        background: rgba(0, 0, 0, 0.9);
+        color: #ffffff;
+      }
+
+      #workspaces button {
+        padding: 0 5px;
+        color: #ffffff;
+      }
+
+      #workspaces button.active {
+        background: #5294e2;
+      }
+
+      #clock, #battery, #pulseaudio, #network, #bluetooth {
+        padding: 0 10px;
+      }
+    '';
+    
+    settings = [{
+      layer = "top";
+      position = "top";
+      height = 30;
+      
+      modules-left = [
+        "hyprland/workspaces"
+        "hyprland/window"
+      ];
+      
+      modules-center = [
+        "clock"
+      ];
+      
+      modules-right = [
+        "network"
+        "bluetooth"
+        "pulseaudio"
+        "battery"
+        "custom/power"
+      ];
+
+      "hyprland/workspaces" = {
+        format = "{name}";
+        on-click = "activate";
+      };
+
+      "clock" = {
+        format = "{:%I:%M %p}";
+        format-alt = "{:%Y-%m-%d}";
+        tooltip-format = "<tt>{calendar}</tt>";
+      };
+
+      "battery" = {
+        format = "{capacity}% {icon}";
+        format-icons = ["" "" "" "" ""];
+        format-charging = "{capacity}% ";
+        interval = 30;
+      };
+
+      "network" = {
+        format-wifi = "  {essid}";
+        format-ethernet = "󰈀 Connected";
+        format-disconnected = "󰖪 Disconnected";
+        tooltip-format = "{ipaddr}";
+        on-click = "nm-connection-editor";
+      };
+
+      "bluetooth" = {
+        format = " {status}";
+        format-connected = " {device_alias}";
+        format-off = "󰂲";
+        on-click = "blueman-manager";
+      };
+
+      "pulseaudio" = {
+        format = "{icon} {volume}%";
+        format-bluetooth = "{icon} {volume}%";
+        format-muted = "󰆸";
+        format-icons = {
+          default = ["" "" ""];
+        };
+        on-click = "pavucontrol";
+      };
+
+      "custom/power" = {
+        format = "⏻";
+        on-click = "wlogout";
+        tooltip = false;
+      };
+    }];
+  };
+
+  # Add power menu configuration (wlogout)
+  programs.wlogout = {
+    enable = true;
+    style = ''
+      * {
+        font-family: "JetBrainsMono Nerd Font";
+      }
+      
+      window {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      
+      button {
+        background-color: #1e1e1e;
+        border-style: solid;
+        border-width: 2px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 25%;
+        border-radius: 8px;
+      }
+      
+      button:focus, button:active, button:hover {
+        background-color: #3700B3;
+        outline-style: none;
+      }
+    '';
+  };
+
+  # Screen locker configuration
+  programs.swaylock = {
+    enable = true;
+    package = pkgs.swaylock-effects;
+    settings = {
+      effect-blur = "7x5";
+      fade-in = 0.2;
+      font = "JetBrainsMono Nerd Font";
+      show-failed-attempts = true;
+      indicator = true;
+      clock = true;
     };
   };
 }
