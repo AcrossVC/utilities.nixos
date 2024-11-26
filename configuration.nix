@@ -86,14 +86,14 @@
     fsType = "ntfs3";
     options = [ 
       "rw"                    # Read-write access
-      #"uid=1000"             # Your user's UID
-      #"gid=1000"             # Your user's GID
+      "uid=1000"             # Your user's UID
+      "gid=1000"             # Your user's GID
       #"windows_names"         # Handle Windows-style filenames
       #"big_writes"           # Improve write performance
       "compress"             # Enable compression for better performance
 
-      "uid=${toString config.users.users.user.uid}"  # Your user owns the mount
-      "gid=${toString config.users.users.user.gid}"
+      #"uid=${toString config.users.users.user.uid}"  # Your user owns the mount
+      #"gid=${toString config.users.users.user.gid}"
       "windows_names"         # Handle Windows filenames properly
       "big_writes"           # Optimize for large file operations (good for games)
       "noatime"              # Reduce unnecessary writes
