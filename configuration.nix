@@ -78,13 +78,7 @@
       config.common.default = "*";
     };
   
-
-  # 3. Ensure proper services are enabled
-  services = {
-    udisks2.enable = true;        # For disk management
-    gvfs.enable = true;           # For mount management
-  };
-
+  
 
   # Bluetooth support
   hardware.bluetooth = {
