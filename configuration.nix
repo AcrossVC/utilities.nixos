@@ -121,13 +121,8 @@
     '';
   };
 
-  # Fix cursor disappearing in resize areas
-  environment.sessionVariables = {
-    WLR_NO_HARDWARE_CURSORS = "1";  # Force software cursors
-    XCURSOR_SIZE = "24";
-  };
 
-
+  
 
 
 

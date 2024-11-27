@@ -273,8 +273,8 @@
       
       # Environment variables
       env = WLR_NO_HARDWARE_CURSORS,1
-      env = XCURSOR_SIZE,24
-      env = XCURSOR_THEME,Papirus
+      env = XCURSOR_SIZE,16
+      env = XCURSOR_THEME,Posy_Cursor
       env = GTK_THEME,Adwaita-dark
       
       # Window rules
@@ -589,4 +589,36 @@
     };
     Install.WantedBy = ["graphical-session.target"];
   };
+
+
+# https://git.disroot.org/lwad/nixos/commit/93dfaee0787d09c9f99ee8e61fe916424a2586b1
+  # https://www.reddit.com/r/NixOS/comments/1c24bnr/help_with_cursors/
+  # Posey's cursor? 
+  home.pointerCursor = {
+    gtk.enable = true;
+    name = "Posy_Cursor";
+    package = pkgs.stdenvNoCC.mkDerivation {
+      name = "posy-improved-cursor";
+
+      src = pkgs.fetchFromGitHub {
+        owner = "simtrami";
+        repo = "posy-improved-cursor-linux";
+        rev = "bd2bac08bf01e25846a6643dd30e2acffa9517d4";
+        hash = "sha256-ndxz0KEU18ZKbPK2vTtEWUkOB/KqA362ipJMjVEgzYQ=";
+      };
+
+      dontBuild = true;
+
+      installPhase = ''
+        mkdir -p $out/share/icons
+        mv Posy_Cursor "$out/share/icons/Posy's Cursor"
+      '';
+    };
+    size = 16;
+    #x11.enable = true;
+    wayland.enable = true;
+  };
+
+
+
 }
