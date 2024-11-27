@@ -54,7 +54,7 @@ with lib;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
 
       # Enable better wayland support
-      forceFullCompositionPipeline = true;
+      #forceFullCompositionPipeline = true;
     };
 
     
@@ -85,9 +85,9 @@ with lib;
       #__GLX_VENDOR_LIBRARY_NAME = "nvidia";
       #LIBVA_DRIVER_NAME = "nvidia";  # Hardware acceleration
       # These help with rendering synchronization
-      __GL_SYNC_TO_VBLANK = "1";  # Enable vsync
-      __GL_SYNC_DISPLAY_DEVICE = "DP-0";  # Sync to primary display
-      LIBGL_DRI3_DISABLE = "1";  # Can help with cursor issues
+      #__GL_SYNC_TO_VBLANK = "1";  # Enable vsync
+      #__GL_SYNC_DISPLAY_DEVICE = "DP-0";  # Sync to primary display
+      #LIBGL_DRI3_DISABLE = "1";  # Can help with cursor issues
     };
 
     # Add system-wide Vulkan support

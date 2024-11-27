@@ -615,8 +615,7 @@
       '';
     };
     size = 16;
-    #x11.enable = true;
-    wayland.enable = true;
+    x11.enable = true;
   };
 
 
