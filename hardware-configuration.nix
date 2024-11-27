@@ -29,14 +29,14 @@
     # Add this section for automatic, consistent mounting
   fileSystems."/mnt/T7" = {
     device = "/dev/disk/by-uuid/6A0E092F0E08F63B";  # Your drive's UUID
-    fsType = "ntfs3";
+    fsType = "ntfs-3g";
     options = [ 
       "rw"                    # Read-write access
       "uid=1000"             # Your user's UID
       "gid=1000"             # Your user's GID
       #"windows_names"         # Handle Windows-style filenames
       #"big_writes"           # Improve write performance
-      #"compress"             # Enable compression for better performance
+      "compress"             # Enable compression for better performance
 
 
       #"nosuid"               # Security measure: disable SUID
