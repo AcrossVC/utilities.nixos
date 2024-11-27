@@ -308,6 +308,10 @@
       name = "Adwaita-dark";
       package = pkgs.gnome.gnome-themes-extra;
     };
+    cursorTheme = {
+      name = "Posy_Cursor";
+      size = 16;
+    };
     iconTheme = {
       name = "Papirus-Dark";
       package = pkgs.papirus-icon-theme;

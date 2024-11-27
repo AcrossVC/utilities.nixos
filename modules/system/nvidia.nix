@@ -70,15 +70,15 @@ with lib;
     };
 
     # Required kernel modules
-    boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
+    boot.initrd.kernelModules = [ "nvidia" ];  # "nvidia_modeset" "nvidia_uvm" "nvidia_drm"
     boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
     # Environment variables for better Wayland/Steam compatibility
     environment.sessionVariables = {
       NIXOS_OZONE_WL = "1";  # Better Electron app support
-      WLR_NO_HARDWARE_CURSORS = "1";  # Force software cursors globally
-      XCURSOR_SIZE = "16";
-      XCURSOR_THEME = "Posy_Cursor";
+      #WLR_NO_HARDWARE_CURSORS = "1";  # Force software cursors globally
+      #XCURSOR_SIZE = "16";
+      #XCURSOR_THEME = "Posy_Cursor";
       
       # These can help with certain Steam games
       #GBM_BACKEND = "nvidia-drm";
