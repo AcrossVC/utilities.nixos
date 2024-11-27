@@ -615,7 +615,7 @@
 
       installPhase = ''
         mkdir -p $out/share/icons
-        mv Posy_Cursor "$out/share/icons/Posy's Cursor"
+        mv Posy_Cursor "$out/share/icons/Posy_Cursor"
       '';
     };
     size = 16;

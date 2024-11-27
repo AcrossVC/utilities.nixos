@@ -70,7 +70,7 @@ with lib;
     };
 
     # Required kernel modules
-    boot.initrd.kernelModules = [ "nvidia" ];  # "nvidia_modeset" "nvidia_uvm" "nvidia_drm"
+    boot.initrd.kernelModules = [ "nvidia" ];  # "nvidia_modeset" "nvidia_uvm" "nvidia_drm" #THIS CAUSED CURSOR PAUSE ON FOCUS CHANGE
     boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
     # Environment variables for better Wayland/Steam compatibility
