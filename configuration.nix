@@ -92,10 +92,12 @@
       #"big_writes"           # Improve write performance
       "compress"             # Enable compression for better performance
 
+
       "nosuid"               # Security measure: disable SUID
       "nodev"               # Security measure: disable device files
       "dmask=022"            # Directory permissions mask
       "fmask=133"            # File permissions mask
+      "umask=022"
 
       #"uid=${toString config.users.users.user.uid}"  # Your user owns the mount
       #"gid=${toString config.users.users.user.gid}"

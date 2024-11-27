@@ -27,6 +27,12 @@ with lib;
     # Basic OpenGL support
     hardware.opengl = {
       enable = true;
+      driSupport = true;  # Enable Direct Rendering Infrastructure
+      driSupport32Bit = true;  # Needed for Steam
+      extraPackages = with pkgs; [
+        vaapiVdpau  # Better video acceleration support
+        libvdpau-va-gl
+      ];
     };
 
     # X11 video driver
@@ -46,22 +52,40 @@ with lib;
       
       nvidiaSettings = true;
       package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+      # Enable better wayland support
+      forceFullCompositionPipeline = true;
     };
 
+    
     # PRIME configuration for hybrid graphics
     hardware.nvidia.prime = {
       sync.enable = true;
       nvidiaBusId = config.modules.nvidia.busId;
       intelBusId = config.modules.nvidia.intelBusId;
+      
+      # Offload by default - this can help with cursor issues
+      offload.enable = true;
+      offload.enableOffloadCmd = true;
     };
 
     # Required kernel modules
-    boot.initrd.kernelModules = [ "nvidia" ];
+    boot.initrd.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm" ];
     boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
-    # Help with Electron apps under Wayland
+    # Environment variables for better Wayland/Steam compatibility
     environment.sessionVariables = {
-      NIXOS_OZONE_WL = "1";
+      NIXOS_OZONE_WL = "1";  # Better Electron app support
+      WLR_NO_HARDWARE_CURSORS = "1";  # Force software cursors globally
+      XCURSOR_SIZE = "24";
+      
+      # These can help with certain Steam games
+      GBM_BACKEND = "nvidia-drm";
+      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      LIBVA_DRIVER_NAME = "nvidia";  # Hardware acceleration
     };
+
+    # Add system-wide Vulkan support
+    hardware.steam-hardware.enable = true;
   };
 }
