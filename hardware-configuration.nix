@@ -36,14 +36,14 @@
       "gid=1000"             # Your user's GID
       #"windows_names"         # Handle Windows-style filenames
       #"big_writes"           # Improve write performance
-      "compress"             # Enable compression for better performance
+      #"compress"             # Enable compression for better performance
 
 
-      "nosuid"               # Security measure: disable SUID
-      "nodev"               # Security measure: disable device files
-      "dmask=022"            # Directory permissions mask
-      "fmask=133"            # File permissions mask
-      "umask=022"
+      #"nosuid"               # Security measure: disable SUID
+      #"nodev"               # Security measure: disable device files
+      #"dmask=022"            # Directory permissions mask
+      #"fmask=133"            # File permissions mask
+      #"umask=022"
 
       #"uid=${toString config.users.users.user.uid}"  # Your user owns the mount
       #"gid=${toString config.users.users.user.gid}"
@@ -52,7 +52,7 @@
       "noatime"              # Reduce unnecessary writes
       "nofail"               # Don't halt boot if drive isn't connected
       "x-systemd.automount"  # Automatically mount when accessed
-      "x-systemd.idle-timeout=60"  # Keep mounted for 1 minute after last access
+      #"x-systemd.idle-timeout=60"  # Keep mounted for 1 minute after last access
 
     ];
   };
