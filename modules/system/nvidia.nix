@@ -65,8 +65,8 @@ with lib;
       intelBusId = config.modules.nvidia.intelBusId;
       
       # Offload by default - this can help with cursor issues
-      offload.enable = true;
-      offload.enableOffloadCmd = true;
+      #offload.enable = true;
+      #offload.enableOffloadCmd = true;
     };
 
     # Required kernel modules
